@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+
+class TextInput
+{
+public:
+    std::string value = "";
+  virtual void add(char c)
+  {
+    value += c;
+  }
+
+  std::string getValue()
+  {
+  return value;
+  }
+};
+
+class NumericInput : public TextInput
+{
+ public:
+  void add(char c) override
+  {
+    if (std::isdigit(c) != 0)
+    {
+      value += c;
+    }
+   }
+};
+
+#ifndef RunTests
+int main()
+{
+  TextInput* input = new NumericInput();
+  input->add('1');
+  input->add('a');
+  input->add('c');
+  input->add('0');
+  input->add('b');
+  std::cout << input->getValue();
+}
+#endif
