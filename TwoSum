@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <unordered_map>
+
+std::pair<int, int> findTwoSum(const std::vector<int>& list, int sum)
+{
+    std::unordered_map<int, int> numbers;
+    std::pair<int, int> indices;
+
+    for (int i = 0; i < list.size(); i++)
+    {
+        int complement = sum - list[i];
+        auto it = numbers.find(complement);
+
+        if (it != numbers.end())
+        {
+            indices.first = it->second;
+            indices.second = i;
+            return indices;
+        }
+
+        numbers[list[i]] = i;
+    }
+
+    indices.first = -1;
+    indices.second = -1;
+    return indices;
+}
+
+#ifndef RunTests
+int main()
+{
+    std::vector<int> list = {3, 1, 5, 7, 5, 9};
+    std::pair<int, int> indices = findTwoSum(list, 10);
+    std::cout << indices.first << '\n' << indices.second;
+}
+#endif
