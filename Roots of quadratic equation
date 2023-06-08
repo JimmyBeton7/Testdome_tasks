@@ -1,0 +1,30 @@
+#include <tuple>
+#include <stdexcept>
+#include <iostream>
+#include <string>
+#include <math.h>
+
+std::pair<double, double> findRoots(double a, double b, double c)
+{
+    std::pair<double,double> result;
+    double delta = sqrt((b*b) - (4.0 * a * c));
+    if(delta == 0)
+    {
+        result.first = ((-1) * b) / (2.0 * a);
+        result.second = ((-1) * b) / (2.0 * a);
+    }
+    else if(delta > 0)
+    {
+        result.first = ((-1) * b - delta) / (2.0 * a);
+        result.second = ((-1) * b + delta) / (2.0 * a);
+    }
+    return result;
+}
+
+#ifndef RunTests
+int main()
+{
+    std::pair<double,double> roots = findRoots(2, 10, 8);
+    std::cout << "Roots: " + std::to_string(roots.first) + ", " + std::to_string(roots.second);
+}
+#endif
