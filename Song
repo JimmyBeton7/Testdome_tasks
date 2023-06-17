@@ -1,0 +1,57 @@
+#include <stdexcept>
+#include <iostream>
+#include <unordered_set>
+
+class Song
+{
+public:
+    Song(std::string name): name(name), nextSong(NULL) {}
+    
+    void next(Song* song)
+    {
+        this->nextSong = song;
+    }
+
+    bool isInRepeatingPlaylist()
+    {
+        //throw std::logic_error("Waiting to be implemented");
+        Song* actual = this;
+        std::unordered_set<const Song*> songs;
+        int set_size_b = songs.size();
+        int set_size_a = -1;
+        
+        while(set_size_b != set_size_a)
+        {
+             set_size_b = songs.size();
+             songs.insert(actual);
+             actual = actual->nextSong;
+             set_size_a = songs.size();
+          
+             if(actual->nextSong == nullptr)
+             {
+                 return false;
+             }
+        }
+        
+        return true;
+    }
+
+private:
+    const std::string name;
+    Song* nextSong;
+};
+
+#ifndef RunTests
+int main()
+{
+    Song* first = new Song("Hello");
+    Song* second = new Song("Eye of the tiger");
+    Song* third = new Song("Donna Mamma");
+    
+    first->next(second);
+    second->next(first);
+    third->next(first);
+
+    std::cout << std::boolalpha << first->isInRepeatingPlaylist();
+}
+#endif
